@@ -87,7 +87,7 @@ public class Attack {
     }
  
 
-    private void deployLayout(GameState state, int layout) {
+    public void deployLayout(GameState state, int layout) {
         if (cost[layout] <= state.data.p1Stats.bits) {
             
             Coords bestLoc = leastDamageSpawnLocation(move, List.of(new Coords(13, 0), new Coords(14, 0)));
