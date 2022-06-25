@@ -12,7 +12,35 @@ import java.util.*;
 
 public class Attack {
 
-    public Attack() {}
+    private final int STRATAGIES = 5;
+
+    private Coords[] scoutSpawn;
+    private Coords[] demoSpawn;
+
+    private int[] scoutAmount;
+    private int[] demoAmount;
+    private boolean[] split;
+    private int[] score;
+    private int[] cost;
+
+    private void initSpawns() {
+        scoutSpawn = new Coords[10];
+        demoSpawn = new Coords[10];
+    }
+
+    private void initStratagies() {
+        // STRAT 1 //
+        scoutAmount[0] = 4;
+        demoAmount[0] = 0;
+    }
+
+    public Attack() {
+        scoutAmount = new int[STRATAGIES];
+        demoAmount = new int[STRATAGIES];
+        score = new int[STRATAGIES];
+
+
+    }
 
     //TODO: Account for shields gained from supports
     private Coords leastDamageSpawnLocation(GameState move, List<Coords> locations) {

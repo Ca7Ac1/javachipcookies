@@ -12,13 +12,13 @@ import java.util.*;
 
 public class Defences {
     
-    private final int LAYOUTS = 4;
+    private final int LAYOUTS = 8;
 
     // Excess points we have for deciding if we should upgrade
     // dummy values for now
-    private final int UPGRADE_SUPPORTS = 8;
-    private final int UPGRADE_TURRETS = 10;
-    private final int UPGRADE_LAYOUT = 20;
+    private final int UPGRADE_SUPPORTS = 15;
+    private final int UPGRADE_TURRETS = 12;
+    private final int UPGRADE_LAYOUT = 25;
 
     private ArrayList<Coords> mainTurrets;
     private ArrayList<Coords> mainSupports;
@@ -27,6 +27,7 @@ public class Defences {
     private ArrayList<ArrayList<Coords>> turretLayout;
     private int[] score;
     private int[] cost;
+    private boolean[] attack;
 
     private ArrayList<Coords> current;
     private int currentLayout;
@@ -49,8 +50,9 @@ public class Defences {
             wallLayout.get(0).add(new Coords(27 - i, 13));
         }
 
-        score[0] = 30;
+        score[0] = 35;
         cost[0] = 14;
+        attack[0] = true;
 
         // STAGE 1 //
         // STAGE 0 + TURRETS // 
@@ -62,8 +64,9 @@ public class Defences {
         turretLayout.get(1).add(new Coords(7, 13));
         turretLayout.get(1).add(new Coords(20, 13));
 
-        score[1] = 30;
+        score[1] = 40;
         cost[1] = 18;
+        attack[1] = true;
 
         // STAGE 2 //
         // LEFT WALLS // 
@@ -73,6 +76,7 @@ public class Defences {
 
         score[2] = 30;
         cost[2] = 12;
+        attack[2] = true;
 
         // STAGE 3 //
         // RIGHT WALLS // 
@@ -82,6 +86,67 @@ public class Defences {
 
         score[3] = 30;
         cost[3] = 12;
+        attack[3] = true;
+
+        // STAGE 4 //
+        // COVER // 
+        for (int i = 0; i < 28; i++) {
+            wallLayout.get(4).add(new Coords(i, 13));
+        }
+
+        score[4] = 35;
+        cost[4] = 28;
+        attack[4] = false;
+
+        // STAGE 5 //
+        // ALL OUT DEFENSE // 
+        for (int i = 0; i < 28; i++) {
+            wallLayout.get(5).add(new Coords(i, 13));
+        }
+
+        for (int i = 0; i < 26; i++) {
+            wallLayout.get(5).add(new Coords(i + 1, 12));
+        }
+
+        score[5] = 45;
+        cost[5] = 54;
+        attack[5] = false;
+
+        // STAGE 6 //
+        // STACK LEFT WALL + RIGHT TURRET // 
+        for (int i = 0; i < 16; i++) {
+            wallLayout.get(6).add(new Coords(i, 13));
+        }
+
+        for (int i = 0; i < 15; i++) {
+            wallLayout.get(6).add(new Coords(i + 1, 12));
+        }
+
+        turretLayout.get(6).add(new Coords(16, 12));
+        turretLayout.get(6).add(new Coords(20, 12));
+        turretLayout.get(6).add(new Coords(24, 12));
+
+        score[6] = 42;
+        cost[6] = 60;
+        attack[6] = true;
+
+        // STAGE 7 //
+        // STACK LEFT WALL + RIGHT TURRET // 
+        for (int i = 0; i < 16; i++) {
+            wallLayout.get(7).add(new Coords(27 - i, 13));
+        }
+
+        for (int i = 0; i < 15; i++) {
+            wallLayout.get(7).add(new Coords(26 - i, 12));
+        }
+
+        turretLayout.get(7).add(new Coords(16, 12));
+        turretLayout.get(7).add(new Coords(20, 12));
+        turretLayout.get(7).add(new Coords(24, 12));
+
+        score[7] = 42;
+        cost[7] = 60;
+        attack[7] = true;
     }
 
     public Defences() {
@@ -95,6 +160,7 @@ public class Defences {
 
         score = new int[LAYOUTS];
         cost = new int[LAYOUTS];
+        attack = new boolean[LAYOUTS];
 
         for (int i = 0; i < LAYOUTS; i++) {
             ArrayList<Coords> walls = new ArrayList<Coords>();
@@ -114,13 +180,17 @@ public class Defences {
         initLayouts();
     }
 
-    public void startTurn(GameState state) {
+    public void startTurn(GameState state, boolean shouldAttack) {
         current.clear();
 
         deployMain(state);
 
         int best = 0;
         for (int i = 0; i < LAYOUTS; i++) {
+            if (shouldAttack && !attack[i]) {
+                continue;
+            }
+
             if (cost[best] > state.data.p1Stats.cores && cost[i] < cost[best]) {
                 best = i;
                 continue;

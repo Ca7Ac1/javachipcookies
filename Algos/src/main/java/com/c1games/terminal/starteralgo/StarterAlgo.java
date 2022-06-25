@@ -69,7 +69,7 @@ public class StarterAlgo implements GameLoop {
         defend.endTurn(scoredOnLocations.size());
         scoredOnLocations.clear();
 
-        defend.startTurn(move);
+        defend.startTurn(move, false);
 
         // buildDefenses(move);
         // buildReactiveDefenses(move);
