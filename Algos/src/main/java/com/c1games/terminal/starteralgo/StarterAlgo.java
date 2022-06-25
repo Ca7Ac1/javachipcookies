@@ -70,7 +70,7 @@ public class StarterAlgo implements GameLoop {
         scoredOnLocations.clear();
 
         boolean shouldAttack = move.data.p1Stats.bits >= attack.chooseLayout(move);
-        defend.startTurn(move, false);
+        defend.startTurn(move, shouldAttack);
 
         best = attack.chooseLayout();
         attack.deployLayout(move, best);

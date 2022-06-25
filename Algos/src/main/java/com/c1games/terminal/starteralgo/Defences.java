@@ -168,6 +168,7 @@ public class Defences {
         score[8] = 45;
         cost[8] = 72;
         attack[8] = false;
+        
     }
 
     public Defences() {

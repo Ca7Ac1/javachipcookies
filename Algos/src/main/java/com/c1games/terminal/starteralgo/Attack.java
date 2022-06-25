@@ -96,7 +96,7 @@ public class Attack {
                 spawn(state, bestLoc, UnitType.Scout);
             }
             for (int i = 0; i < demoAmount[layout]; i++ ) {
-                spawn(state, bestLoc, UnitType.Demo);
+                spawn(state, bestLoc, UnitType.Demolisher);
             }
 
         }
