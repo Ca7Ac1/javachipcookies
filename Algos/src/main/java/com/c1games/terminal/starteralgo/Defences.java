@@ -12,7 +12,7 @@ import java.util.*;
 
 public class Defences {
     
-    private final int LAYOUTS = 8;
+    private final int LAYOUTS = 9;
 
     // Excess points we have for deciding if we should upgrade
     // dummy values for now
@@ -147,6 +147,27 @@ public class Defences {
         score[7] = 42;
         cost[7] = 60;
         attack[7] = true;
+
+        // STAGE 8 //
+        //CLUSTERED TURRETS//
+        for (int i = 0; i < 7; i++) {
+            wallLayout.get(9).add(new Coords(i, 13));
+            wallLayout.get(9).add(new Coords(27 - i, 13));
+        }
+        for (int i = 0; i < 18; i++) { 
+            wallLayout.get(9).add(new Coords(22 - i, 12));
+        }
+        
+        turretLayout.get(9).add(new Coords(7, 13));
+        turretLayout.get(9).add(new Coords(20, 13));
+        turretLayout.get(9).add(new Coords(2, 12));
+        turretLayout.get(9).add(new Coords(3, 11));
+        turretLayout.get(9).add(new Coords(25, 12));
+        turretLayout.get(9).add(new Coords(24, 11));
+
+        score[8] = 45;
+        cost[8] = 72;
+        attack[8] = false;
     }
 
     public Defences() {
