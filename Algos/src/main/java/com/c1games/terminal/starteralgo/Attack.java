@@ -32,14 +32,79 @@ public class Attack {
         // STRAT 1 //
         scoutAmount[0] = 4;
         demoAmount[0] = 0;
+        score[0] = 30;
+        cost[0] = 4;
+
+        // 2 //
+        scoutAmount[1] = 7;
+        demoAmount[1] = 0;
+        score[0] = 30;
+        cost[0] = 7;
+
+        // 3 //
+        scoutAmount[2] = 12;
+        demoAmount[2] = 0;
+        score[0] = 30;
+        cost[0] = 12;
+
+        // 4 //
+        scoutAmount[2] = 12;
+        demoAmount[2] = 0;
+        score[0] = 30;
+        cost[0] = 12;
+        
+        // 5 //
+        scoutAmount[2] = 12;
+        demoAmount[2] = 0;
+        score[0] = 30;
+        cost[0] = 12;
     }
 
     public Attack() {
         scoutAmount = new int[STRATAGIES];
         demoAmount = new int[STRATAGIES];
         score = new int[STRATAGIES];
+    }
+
+    public int chooseLayout(GameState state) {
+        int best = 0;
+        for (int i = 0; i < STRATAGIES; i++) {
+
+            // if (cost[best] > state.data.p1Stats.bits && cost[i] < cost[best]) {
+            //     best = i;
+            //     continue;
+            // }
+
+            // if (cost[i] > state.data.p1Stats.bits) {
+            //     continue;
+            // }
+
+            if (score[i] > score[best] || (score[i] == score[best] && cost[i] < cost[best])) {
+                best = i;
+            }
+        }
+        return best;
+    }
+ 
+
+    private void deployLayout(GameState state, int layout) {
+        if (cost[layout] <= state.data.p1Stats.bits) {
+            
+            Coords bestLoc = leastDamageSpawnLocation(move, List.of(new Coords(13, 0), new Coords(14, 0)));
+            int total = scoutAmount[layout] + demoAmount[layout];
+            for (int i = 0; i < scoutAmount[layout]; i++ ) {
+                spawn(state, bestLoc, UnitType.Scout);
+            }
+            for (int i = 0; i < demoAmount[layout]; i++ ) {
+                spawn(state, bestLoc, UnitType.Demo);
+            }
+
+        }
+    }  
 
 
+    private void spawn(GameState state, Coords c, UnitType unit) {
+        state.attemptSpawn(c, unit);
     }
 
     //TODO: Account for shields gained from supports

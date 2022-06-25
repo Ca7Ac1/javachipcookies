@@ -182,7 +182,6 @@ public class Defences {
 
     public void startTurn(GameState state, boolean shouldAttack) {
         current.clear();
-
         deployMain(state);
 
         int best = 0;

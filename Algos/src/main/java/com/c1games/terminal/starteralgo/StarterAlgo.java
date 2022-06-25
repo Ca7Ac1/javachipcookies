@@ -69,32 +69,36 @@ public class StarterAlgo implements GameLoop {
         defend.endTurn(scoredOnLocations.size());
         scoredOnLocations.clear();
 
+        boolean shouldAttack = move.data.p1Stats.bits >= attack.chooseLayout(move);
         defend.startTurn(move, false);
 
+        best = attack.chooseLayout();
+        attack.deployLayout(move, best);
+        
         // buildDefenses(move);
         // buildReactiveDefenses(move);
 
-        if (move.data.turnInfo.turnNumber < 5) {
-            deployRandomInterceptors(move);
-        } else {
-            // If they have a lot of units in the first two of their rows, we can use the long range Demolisher to deal damage to them
-            if (detectEnemyUnits(move,null, List.of(14,15), null) > 10) {
-                demolisherLineStrategy(move);
-            }
-            // Otherwise lets go with a scout rush strategy where we send a ton of fast scoring units.
-            else {
-                // We only send scouts every other turn because its better to save up for a big attack.
-                if (move.data.turnInfo.turnNumber % 2 == 1) {
-                    // Lets dynamically choose which side to attack based on the expected path the units will take
-                    Coords bestLoc = leastDamageSpawnLocation(move, List.of(new Coords(13, 0), new Coords(14, 0)));
-                    for (int i = 0; i < 100; i++) {
-                        move.attemptSpawn(bestLoc,UnitType.Scout);
-                    }
-                }
-                // Lastly, lets build Supports
-                move.attemptSpawnMultiple(Arrays.asList(supportLocations),UnitType.Support);
-            }
-        }
+        // if (move.data.turnInfo.turnNumber < 5) {
+        //     deployRandomInterceptors(move);
+        // } else {
+        //     // If they have a lot of units in the first two of their rows, we can use the long range Demolisher to deal damage to them
+        //     if (detectEnemyUnits(move,null, List.of(14,15), null) > 10) {
+        //         demolisherLineStrategy(move);
+        //     }
+        //     // Otherwise lets go with a scout rush strategy where we send a ton of fast scoring units.
+        //     else {
+        //         // We only send scouts every other turn because its better to save up for a big attack.
+        //         if (move.data.turnInfo.turnNumber % 2 == 1) {
+        //             // Lets dynamically choose which side to attack based on the expected path the units will take
+        //             Coords bestLoc = leastDamageSpawnLocation(move, List.of(new Coords(13, 0), new Coords(14, 0)));
+        //             for (int i = 0; i < 100; i++) {
+        //                 move.attemptSpawn(bestLoc,UnitType.Scout);
+        //             }
+        //         }
+        //         // Lastly, lets build Supports
+        //         move.attemptSpawnMultiple(Arrays.asList(supportLocations),UnitType.Support);
+        //     }
+        // }
     }
 
     /**
