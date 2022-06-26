@@ -12,7 +12,7 @@ import java.util.*;
 
 public class Attack {
 
-    private final int STRATAGIES = 6;
+    private final int STRATAGIES = 4;
 
     private ArrayList<ArrayList<Coords>> scoutSpawns;
     private ArrayList<ArrayList<Coords>> demoSpawns;
@@ -128,7 +128,7 @@ public class Attack {
             }
         }
 
-        if (cost[best] > state.data.p1Stats.cores) {
+        if (cost[best] > state.data.p1Stats.bits) {
             return false;
         }
         

@@ -206,13 +206,13 @@ public class Defences {
         // STAGE 10 //
         // STAIRCASE ATTACK (RIGHT) //
         for (int i = 0; i <= 6; i++) {
-            wallLayout.get(11).add(new Coords(15 + i, 3 + i));
+            wallLayout.get(10).add(new Coords(15 + i, 3 + i));
         }
         for (int i = 1; i <= 3; i++) {
             supportLayout.get(10).add(new Coords(21 + i, 9 + i));
         }
-        wallLayout.get(11).add(new Coords(26, 13));
-        wallLayout.get(11).add(new Coords(27, 13));
+        wallLayout.get(10).add(new Coords(26, 13));
+        wallLayout.get(10).add(new Coords(27, 13));
         
         wallLayout.get(10).add(new Coords(14, 2));
         wallLayout.get(10).add(new Coords(13, 2));
@@ -344,8 +344,8 @@ public class Defences {
         // }
     }
 
-    public void endTurn(int damageTaken, int attackScore) {
-        score[currentLayout] -= damageTaken;
+    public void endTurn(int damageScore, int attackScore) {
+        score[currentLayout] -= damageScore;
         attack[currentLayout] += attackScore;
     }
 
