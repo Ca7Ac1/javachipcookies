@@ -264,6 +264,7 @@ public class Defences {
         for (int i = 0; i < LAYOUTS; i++) {
             wallLayout.add(new ArrayList<Coords>());
             turretLayout.add(new ArrayList<Coords>());
+            supportLayout.add(new ArrayList<Coords>());
 
             score[i] = 0;
             cost[i] = 0;

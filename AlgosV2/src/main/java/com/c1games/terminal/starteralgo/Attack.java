@@ -102,7 +102,7 @@ public class Attack {
         demoSpawns = new ArrayList<ArrayList<Coords>>(STRATAGIES);
 
         scoutAmount = new ArrayList<ArrayList<Integer>>(STRATAGIES);
-        scoutAmount = new ArrayList<ArrayList<Integer>>(STRATAGIES);
+        demoAmount = new ArrayList<ArrayList<Integer>>(STRATAGIES);
 
         for (int i = 0; i < STRATAGIES; i++) {
             scoutSpawns.add(new ArrayList<Coords>());
