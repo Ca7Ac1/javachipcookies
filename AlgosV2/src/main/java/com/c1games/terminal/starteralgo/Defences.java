@@ -12,7 +12,7 @@ import java.util.*;
 
 public class Defences {
 
-    private final int LAYOUTS = 11;
+    private final int LAYOUTS = 12;
 
     // Excess points we have for deciding if we should upgrade
     // dummy values for now
@@ -25,9 +25,11 @@ public class Defences {
 
     private ArrayList<ArrayList<Coords>> wallLayout;
     private ArrayList<ArrayList<Coords>> turretLayout;
+    private ArrayList<ArrayList<Coords>> supportLayout;
+
     private int[] score;
     private int[] cost;
-    public boolean[] attack;
+    public int[] attack;
 
     private ArrayList<Coords> current;
     public int currentLayout;
@@ -52,7 +54,7 @@ public class Defences {
 
         score[0] = 35;
         cost[0] = 14;
-        attack[0] = true;
+        attack[0] = 10;
 
         // STAGE 1 //
         // STAGE 0 + TURRETS //
@@ -66,7 +68,7 @@ public class Defences {
 
         score[1] = 40;
         cost[1] = 18;
-        attack[1] = true;
+        attack[1] = 15;
 
         // STAGE 2 //
         // LEFT WALLS //
@@ -76,7 +78,7 @@ public class Defences {
 
         score[2] = 30;
         cost[2] = 12;
-        attack[2] = true;
+        attack[2] = 10;
 
         // STAGE 3 //
         // RIGHT WALLS //
@@ -86,7 +88,7 @@ public class Defences {
 
         score[3] = 30;
         cost[3] = 12;
-        attack[3] = true;
+        attack[3] = 10;
 
         // STAGE 4 //
         // COVER //
@@ -96,7 +98,7 @@ public class Defences {
 
         score[4] = 35;
         cost[4] = 28;
-        attack[4] = false;
+        attack[4] = -35;
 
         // STAGE 5 //
         // ALL OUT DEFENSE //
@@ -110,7 +112,7 @@ public class Defences {
 
         score[5] = 45;
         cost[5] = 54;
-        attack[5] = false;
+        attack[5] = -35;
 
         // STAGE 6 //
         // STACK LEFT WALL + RIGHT TURRET //
@@ -128,7 +130,7 @@ public class Defences {
 
         score[6] = 42;
         cost[6] = 60;
-        attack[6] = true;
+        attack[6] = 15;
 
         // STAGE 7 //
         // STACK LEFT WALL + RIGHT TURRET //
@@ -146,7 +148,7 @@ public class Defences {
 
         score[7] = 42;
         cost[7] = 60;
-        attack[7] = true;
+        attack[7] = 15;
 
         // STAGE 8 //
         // CLUSTERED TURRETS//
@@ -167,7 +169,7 @@ public class Defences {
 
         score[8] = 45;
         cost[8] = 72;
-        attack[8] = false;
+        attack[8] = 15;
 
         // STAGE 9 //
         // TRENCH //
@@ -199,24 +201,50 @@ public class Defences {
 
         score[9] = 40;
         cost[9] = 34;
-        attack[9] = true;
+        attack[9] = 15;
 
         // STAGE 10 //
-        // ALL-OUT ATTACK //
-
-        for (int i = 0; i < 12; i++) {
-            wallLayout.get(10).add(new Coords(13 - i, 2 + i));
-            wallLayout.get(10).add(new Coords(14 + i, 2 + i));
+        // STAIRCASE ATTACK (RIGHT) //
+        for (int i = 0; i <= 6; i++) {
+            wallLayout.get(11).add(new Coords(15 + i, 3 + i));
         }
-        // wallLayout.get(10).add(new Coords(0, 13));
-        // wallLayout.get(10).add(new Coords(1, 13));
-        // wallLayout.get(10).add(new Coords(26, 13));
-        // wallLayout.get(10).add(new Coords(27, 13));
+        for (int i = 1; i <= 3; i++) {
+            supportLayout.get(10).add(new Coords(21 + i, 9 + i));
+        }
+        wallLayout.get(11).add(new Coords(26, 13));
+        wallLayout.get(11).add(new Coords(27, 13));
+        
+        wallLayout.get(10).add(new Coords(14, 2));
+        wallLayout.get(10).add(new Coords(13, 2));
+        wallLayout.get(10).add(new Coords(12, 3));
+        wallLayout.get(10).add(new Coords(11, 4));
+        wallLayout.get(10).add(new Coords(10, 4));
 
-        score[10] = 15;
-        cost[10] = 26;
-        attack[10] = true;
+        score[10] = 30; 
+        cost[10] = 45;
+        attack[10] = 45;
 
+        // STAGE 11 //
+        // STAIRCASE ATTACK (LEFT) //
+
+        for (int i = 0; i <= 6; i++) {
+            wallLayout.get(11).add(new Coords(12 - i, 3 + i));
+        }
+        for (int i = 7; i <= 9; i++) {
+            supportLayout.get(11).add(new Coords(12 - i, 3 + i)); 
+        }
+        wallLayout.get(11).add(new Coords(2, 13));
+        wallLayout.get(11).add(new Coords(3, 13));
+
+        wallLayout.get(11).add(new Coords(13, 2));
+        wallLayout.get(11).add(new Coords(14, 2));
+        wallLayout.get(11).add(new Coords(15, 3));
+        wallLayout.get(11).add(new Coords(16, 4));
+        wallLayout.get(11).add(new Coords(17, 4));
+
+        score[11] = 30; 
+        cost[11] = 45;
+        attack[11] = 45;
     }
 
     public Defences() {
@@ -227,20 +255,19 @@ public class Defences {
 
         wallLayout = new ArrayList<ArrayList<Coords>>(LAYOUTS);
         turretLayout = new ArrayList<ArrayList<Coords>>(LAYOUTS);
+        supportLayout = new ArrayList<ArrayList<Coords>>(LAYOUTS);
 
         score = new int[LAYOUTS];
         cost = new int[LAYOUTS];
-        attack = new boolean[LAYOUTS];
+        attack = new int[LAYOUTS];
 
         for (int i = 0; i < LAYOUTS; i++) {
-            ArrayList<Coords> walls = new ArrayList<Coords>();
-            ArrayList<Coords> turrets = new ArrayList<Coords>();
-
-            wallLayout.add(walls);
-            turretLayout.add(turrets);
+            wallLayout.add(new ArrayList<Coords>());
+            turretLayout.add(new ArrayList<Coords>());
 
             score[i] = 0;
             cost[i] = 0;
+            attack[i] = 0;
         }
 
         currentLayout = 0;
@@ -254,31 +281,29 @@ public class Defences {
         deployMain(state);
 
         int best = 0;
-        if (state.data.p1Stats.bits >= 30) { //when we're stuck on all-out-defense layout
-            best = 10;
-        }
-        else {
-            for (int i = 0; i < LAYOUTS; i++) {
-                if (shouldAttack && !attack[i]) {
-                    continue;
-                }
+        for (int i = 0; i < LAYOUTS; i++) {
+            int prevScore = score[best];
+            int currScore = score[i];
 
-                if (cost[best] > state.data.p1Stats.cores && cost[i] < cost[best]) {
-                    best = i;
-                    continue;
-                }
+            if (shouldAttack) {
+                prevScore += attack[best];
+                currScore += attack[i];
+            }
 
-                if (cost[i] > state.data.p1Stats.cores) {
-                    continue;
-                }
+            if (cost[best] > state.data.p1Stats.cores && cost[i] < cost[best]) {
+                best = i;
+                continue;
+            }
 
-                if (score[i] > score[best] || (score[i] == score[best] && cost[i] < cost[best])) {
-                    best = i;
-                }
+            if (cost[i] > state.data.p1Stats.cores) {
+                continue;
+            }
+
+            if (currScore > prevScore || (currScore == prevScore && cost[i] < cost[best])) {
+                best = i;
             }
         }
         
-
         currentLayout = best;
         deployLayout(state, best);
 
@@ -319,8 +344,9 @@ public class Defences {
         // }
     }
 
-    public void endTurn(int damage) {
-        score[currentLayout] -= damage;
+    public void endTurn(int damageTaken, int attackScore) {
+        score[currentLayout] -= damageTaken;
+        attack[currentLayout] += attackScore;
     }
 
     private void deployMain(GameState state) {
@@ -330,6 +356,7 @@ public class Defences {
     private void deployLayout(GameState state, int layout) {
         spawn(state, wallLayout.get(layout), UnitType.Wall, true);
         spawn(state, turretLayout.get(layout), UnitType.Turret, true);
+        spawn(state, supportLayout.get(layout), UnitType.Support, true);
 
         refund(state);
     }
