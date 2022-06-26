@@ -378,7 +378,6 @@ public class Defences {
     private void refund(GameState state) {
         for (Coords c : current) {
             state.attemptRemoveStructure(c);
-            ;
         }
     }
 }

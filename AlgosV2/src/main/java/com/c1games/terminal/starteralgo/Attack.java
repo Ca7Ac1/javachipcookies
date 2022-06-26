@@ -55,13 +55,13 @@ public class Attack {
         cost[2] = 20;
 
         // 3 // (right staircase attack)
-        scoutSpawns.get(1).add(new Coords(10, 3)); // 10
+        scoutSpawns.get(3).add(new Coords(10, 3)); // 10
         scoutAmount.get(3).add(10);
         
-        scoutSpawns.get(1).add(new Coords(11, 2)); // 7
+        scoutSpawns.get(3).add(new Coords(11, 2)); // 7
         scoutAmount.get(3).add(7);
 
-        scoutSpawns.get(1).add(new Coords(12, 1)); // 3
+        scoutSpawns.get(3).add(new Coords(12, 1)); // 3
         scoutAmount.get(3).add(3);
 
         score[3] = 30;
@@ -144,11 +144,11 @@ public class Attack {
 
     private void deployLayout(GameState state, int layout) {
         for (int i = 0; i < scoutSpawns.get(layout).size(); i++) {  
-            spawn(state, scoutAmount.get(layout), scoutAmount.get(layout));
+            spawn(state, scoutSpawns.get(layout), UnitType.Scout, scoutAmount.get(layout));
         }
 
         for (int i = 0; i < demoSpawns.get(layout).size(); i++) {  
-            spawn(state, demoAmount.get(layout), demoAmount.get(layout));
+            spawn(state, demoSpawns.get(layout), UnitType.Demolisher, demoAmount.get(layout));
         }
     }
 
