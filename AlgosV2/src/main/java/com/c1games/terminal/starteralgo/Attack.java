@@ -49,7 +49,7 @@ public class Attack {
         scoutAmount.get(2).add(7);
 
         scoutSpawns.get(2).add(new Coords(17, 3)); 
-        scoutSpawns.get(2).add(3);
+        scoutAmount.get(2).add(3);
   
         score[2] = 30;
         cost[2] = 20;
@@ -144,11 +144,11 @@ public class Attack {
 
     private void deployLayout(GameState state, int layout) {
         for (int i = 0; i < scoutSpawns.get(layout).size(); i++) {  
-            spawn(state, scoutSpawns.get(layout), UnitType.Scout, scoutAmount.get(layout));
+            spawn(state, scoutSpawns.get(layout).get(i), UnitType.Scout, scoutAmount.get(layout).get(i));
         }
 
         for (int i = 0; i < demoSpawns.get(layout).size(); i++) {  
-            spawn(state, demoSpawns.get(layout), UnitType.Demolisher, demoAmount.get(layout));
+            spawn(state, demoSpawns.get(layout).get(i), UnitType.Demolisher, demoAmount.get(layout).get(i));
         }
     }
 

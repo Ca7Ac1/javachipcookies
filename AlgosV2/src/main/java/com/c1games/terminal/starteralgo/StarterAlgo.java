@@ -48,8 +48,8 @@ public class StarterAlgo implements GameLoop {
      * Make a move in the game.
      */
     @Override
-    public void onTurn(GameIO io, GameState move) {
-        GameIO.debug().println("Performing turn " + move.data.turnInfo.turnNumber + " of your custom algo strategy");
+    public void onTurn(GameIO io, GameState state) {
+        GameIO.debug().println("Performing turn " + state.data.turnInfo.turnNumber + " of your custom algo strategy");
 
         int damageScore = damagedLocations.size();
         int attackScore = scoredLocations.size();
