@@ -23,6 +23,16 @@ public class Attack {
     private int[] score;
     private int[] cost;
 
+
+    public Attack() {
+        scoutAmount = new int[STRATAGIES];
+        demoAmount = new int[STRATAGIES];
+        score = new int[STRATAGIES];
+
+        initSpawns();
+        initStratagies();
+    }
+
     private void initSpawns() {
         scoutSpawn = new Coords[10];
         demoSpawn = new Coords[10];
@@ -38,35 +48,29 @@ public class Attack {
         // 2 //
         scoutAmount[1] = 7;
         demoAmount[1] = 0;
-        score[0] = 30;
-        cost[0] = 7;
+        score[1] = 30;
+        cost[1] = 7;
 
         // 3 //
         scoutAmount[2] = 12;
         demoAmount[2] = 0;
-        score[0] = 30;
-        cost[0] = 12;
+        score[2] = 30;
+        cost[2] = 12;
 
         // 4 //
-        scoutAmount[2] = 12;
-        demoAmount[2] = 0;
-        score[0] = 30;
-        cost[0] = 12;
+        scoutAmount[3] = 12;
+        demoAmount[3] = 0;
+        score[3] = 30;
+        cost[3] = 12;
         
         // 5 //
-        scoutAmount[2] = 12;
-        demoAmount[2] = 0;
-        score[0] = 30;
-        cost[0] = 12;
+        scoutAmount[4] = 12;
+        demoAmount[4] = 0;
+        score[4] = 30;
+        cost[4] = 12;
     }
 
-    public Attack() {
-        scoutAmount = new int[STRATAGIES];
-        demoAmount = new int[STRATAGIES];
-        score = new int[STRATAGIES];
-    }
-
-    public int chooseLayout(GameState state) {
+    private int chooseLayout(GameState state) {
         int best = 0;
         for (int i = 0; i < STRATAGIES; i++) {
 
@@ -87,10 +91,10 @@ public class Attack {
     }
  
 
-    public void deployLayout(GameState state, int layout) {
+    private void deployLayout(GameState state, int layout) {
         if (cost[layout] <= state.data.p1Stats.bits) {
             
-            Coords bestLoc = leastDamageSpawnLocation(move, List.of(new Coords(13, 0), new Coords(14, 0)));
+            Coords bestLoc = leastDamageSpawnLocation(state, List.of(new Coords(13, 0), new Coords(14, 0)));
             int total = scoutAmount[layout] + demoAmount[layout];
             for (int i = 0; i < scoutAmount[layout]; i++ ) {
                 spawn(state, bestLoc, UnitType.Scout);

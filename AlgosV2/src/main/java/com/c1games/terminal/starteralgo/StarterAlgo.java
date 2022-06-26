@@ -64,17 +64,19 @@ public class StarterAlgo implements GameLoop {
      */
     @Override
     public void onTurn(GameIO io, GameState move) {
-        move.attemptSpawnMultiple(Arrays.asList(new Coords[]{new Coords(24,10), new Coords(24,10), new Coords(24,10)}), UnitType.DEMOLISHER);
         GameIO.debug().println("Performing turn " + move.data.turnInfo.turnNumber + " of your custom algo strategy");
 
         defend.endTurn(scoredOnLocations.size());
+        attack.endTurn(scoredOnLocations.size() == 0);
         scoredOnLocations.clear();
 
-        boolean shouldAttack = move.data.p1Stats.bits >= attack.chooseLayout(move);
+        //boolean shouldAttack = move.data.p1Stats.bits >= attack.cost[attack.currentLayout];
         defend.startTurn(move, false);
+        if (defend.attack[defend.currentLayout]) {
+            attack.startTurn(move); 
+        }
 
-        int best = attack.chooseLayout();
-        attack.deployLayout(move, best);
+
         
         // buildDefenses(move);
         // buildReactiveDefenses(move);
